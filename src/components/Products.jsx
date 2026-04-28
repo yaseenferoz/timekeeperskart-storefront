@@ -14,7 +14,7 @@ function Products() {
 
   const handleBuyNow = (product) => {
     // ✅ Create dynamic product detail URL
-    const productUrl = `${window.location.origin}/product/${product._id}`;
+    const productUrl = `${window.location.origin}/api/product/${product._id}`;
 
     const message = `Hi 👋
 
