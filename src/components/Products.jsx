@@ -13,7 +13,7 @@ function Products() {
   }, []);
 
   const handleBuyNow = (product) => {
-    // ✅ Dynamic product link
+    // ✅ Create dynamic product detail URL
     const productUrl = `${window.location.origin}/product/${product._id}`;
 
     const message = `Hi 👋
@@ -24,8 +24,7 @@ Name: ${product.name}
 Price: ₹${product.price}
 Product Link: ${productUrl}`;
 
-    const url = `https://wa.me/91XXXXXXXXXX?text=${encodeURIComponent(message)}`;
-
+    const url = `https://wa.me/919980419466?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
   };
 
@@ -67,7 +66,7 @@ Product Link: ${productUrl}`;
               {/* WhatsApp Button */}
               <button
                 onClick={(e) => {
-                  e.stopPropagation(); // ❗ Prevent card click navigation
+                  e.stopPropagation(); // prevent card click
                   handleBuyNow(p);
                 }}
                 className="mt-4 w-full bg-green-500 hover:bg-green-600 py-2 rounded-lg text-white"
