@@ -10,7 +10,7 @@ function Navbar() {
 
         {/* Logo */}
         <Link to="/" className="text-xl font-bold text-white">
-          Timekeepers<span className="text-gold">Kart</span>
+          MA-Quality-Products
         </Link>
 
         {/* Desktop Menu */}
