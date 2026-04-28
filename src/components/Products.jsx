@@ -14,7 +14,7 @@ function Products() {
 
   const handleBuyNow = (product) => {
     // ✅ Use your live domain directly (avoids cache/env issues)
-    const productUrl = `https://www.timekeeperskart.online/product/${product._id}`;
+    const productUrl = `https://www.ma-quality-products.online/product/${product._id}`;
 
     const message = `Hi 👋
 

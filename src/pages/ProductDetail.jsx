@@ -27,7 +27,7 @@ function ProductDetail() {
 
   const handleBuyNow = () => {
     // ✅ Use live domain for reliability
-    const productUrl = `https://www.timekeeperskart.online/product/${product._id}`;
+    const productUrl = `https://www.ma-quality-products.online/product/${product._id}`;
 
     const message = `Hi 👋
 
