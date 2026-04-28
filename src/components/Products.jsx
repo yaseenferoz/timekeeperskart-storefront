@@ -13,8 +13,8 @@ function Products() {
   }, []);
 
   const handleBuyNow = (product) => {
-    // ✅ Create dynamic product detail URL
-    const productUrl = `${window.location.origin}/product/${product._id}`;
+    // ✅ Use your live domain directly (avoids cache/env issues)
+    const productUrl = `https://www.timekeeperskart.online/product/${product._id}`;
 
     const message = `Hi 👋
 
@@ -25,6 +25,8 @@ Price: ₹${product.price}
 Product Link: ${productUrl}`;
 
     const url = `https://wa.me/919980419466?text=${encodeURIComponent(message)}`;
+
+    console.log("WhatsApp Message:", message); // debug
     window.open(url, "_blank");
   };
 
@@ -66,7 +68,7 @@ Product Link: ${productUrl}`;
               {/* WhatsApp Button */}
               <button
                 onClick={(e) => {
-                  e.stopPropagation(); // prevent card click
+                  e.stopPropagation(); // prevent navigation
                   handleBuyNow(p);
                 }}
                 className="mt-4 w-full bg-green-500 hover:bg-green-600 py-2 rounded-lg text-white"

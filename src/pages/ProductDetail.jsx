@@ -26,15 +26,20 @@ function ProductDetail() {
   }
 
   const handleBuyNow = () => {
+    // ✅ Use live domain for reliability
+    const productUrl = `https://www.timekeeperskart.online/product/${product._id}`;
+
     const message = `Hi 👋
 
 I want to buy this watch:
 
 Name: ${product.name}
 Price: ₹${product.price}
-Image: ${product.images[0]}`;
+Product Link: ${productUrl}`;
 
     const url = `https://wa.me/919980419466?text=${encodeURIComponent(message)}`;
+
+    console.log("WhatsApp Message:", message); // debug
     window.open(url, "_blank");
   };
 
@@ -50,6 +55,7 @@ Image: ${product.images[0]}`;
         <div>
           <img
             src={selectedImage}
+            alt={product.name}
             className="w-full h-[400px] object-cover rounded-2xl mb-4"
           />
 
@@ -59,7 +65,7 @@ Image: ${product.images[0]}`;
                 key={index}
                 src={img}
                 onClick={() => setSelectedImage(img)}
-                className="w-20 h-20 object-cover rounded-lg cursor-pointer border border-gray-700 hover:border-gold"
+                className="w-20 h-20 object-cover rounded-lg cursor-pointer border border-gray-700 hover:border-yellow-400"
               />
             ))}
           </div>
@@ -69,7 +75,7 @@ Image: ${product.images[0]}`;
         <div>
           <h1 className="text-3xl font-bold">{product.name}</h1>
 
-          <p className="text-gold text-2xl mt-3">₹{product.price}</p>
+          <p className="text-yellow-400 text-2xl mt-3">₹{product.price}</p>
 
           <div className="mt-4 text-gray-400 space-y-1">
             <p>Brand: {product.brand}</p>
@@ -82,9 +88,10 @@ Image: ${product.images[0]}`;
             {product.description}
           </div>
 
+          {/* WhatsApp Button */}
           <button
             onClick={handleBuyNow}
-            className="mt-8 bg-green-500 hover:bg-green-600 px-6 py-3 rounded-lg text-white"
+            className="mt-8 bg-green-500 hover:bg-green-600 px-6 py-3 rounded-lg text-white w-full md:w-auto"
           >
             Buy on WhatsApp
           </button>
