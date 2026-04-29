@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import API from "../api/api";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import BuyModal from "../components/BuyModal";
 
 function AllProducts() {
   const [products, setProducts] = useState([]);
@@ -16,6 +17,7 @@ function AllProducts() {
 
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedProduct, setSelectedProduct] = useState(null); // ✅ NEW
 
   const itemsPerPage = 6;
 
@@ -31,11 +33,10 @@ function AllProducts() {
       .catch((err) => console.log(err));
   }, []);
 
-  // Apply filters + search
+  // Filters + search
   useEffect(() => {
     let data = [...products];
 
-    // Filters
     if (filters.brand) {
       data = data.filter((p) => p.brand === filters.brand);
     }
@@ -61,7 +62,6 @@ function AllProducts() {
       );
     }
 
-    // 🔍 SEARCH
     if (search) {
       data = data.filter(
         (p) =>
@@ -71,10 +71,10 @@ function AllProducts() {
     }
 
     setFiltered(data);
-    setCurrentPage(1); // reset page on filter/search
+    setCurrentPage(1);
   }, [filters, search, products]);
 
-  // Pagination logic
+  // Pagination
   const indexOfLast = currentPage * itemsPerPage;
   const indexOfFirst = indexOfLast - itemsPerPage;
   const currentProducts = filtered.slice(indexOfFirst, indexOfLast);
@@ -83,26 +83,8 @@ function AllProducts() {
   // Dynamic filters
   const brands = [...new Set(products.map((p) => p.brand).filter(Boolean))];
   const genders = [...new Set(products.map((p) => p.gender?.toLowerCase()).filter(Boolean))];
-  const movements = [...new Set(products.map((p) => p.movement?.toLowerCase()).filter(Boolean))];
-  const styles = [...new Set(products.map((p) => p.style?.toLowerCase()).filter(Boolean))];
 
   const format = (t) => t.charAt(0).toUpperCase() + t.slice(1);
-
-  const handleBuyNow = (product) => {
-    const url = `https://www.ma-quality-products.online/product/${product._id}`;
-
-    const message = `Hi 👋
-
-I want to buy this watch:
-
-Name: ${product.name}
-Price: ₹${product.price}
-Product Link: ${url}`;
-
-    window.open(
-      `https://wa.me/919980419466?text=${encodeURIComponent(message)}`
-    );
-  };
 
   return (
     <div className="bg-black text-white min-h-screen">
@@ -116,7 +98,6 @@ Product Link: ${url}`;
 
           <h3 className="text-xl mb-4">Filters</h3>
 
-          {/* SEARCH */}
           <input
             type="text"
             placeholder="Search watches..."
@@ -171,7 +152,6 @@ Product Link: ${url}`;
             ))}
           </div>
 
-          {/* CLEAR */}
           <button
             onClick={() =>
               setFilters({
@@ -190,7 +170,6 @@ Product Link: ${url}`;
         {/* PRODUCTS */}
         <div className="md:col-span-3">
 
-          {/* GRID */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {currentProducts.map((p) => (
               <div
@@ -198,18 +177,22 @@ Product Link: ${url}`;
                 onClick={() => navigate(`/product/${p._id}`)}
                 className="bg-[#111] rounded-xl overflow-hidden cursor-pointer"
               >
-                <img src={p.images[0]} className="h-60 w-full object-cover" />
+                <img
+                  src={p.images[0]}
+                  className="h-60 w-full object-cover"
+                />
 
                 <div className="p-3">
                   <h4>{p.name}</h4>
                   <p className="text-yellow-400">₹{p.price}</p>
 
+                  {/* ✅ FIXED BUY BUTTON */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleBuyNow(p);
+                      setSelectedProduct(p);
                     }}
-                    className="mt-3 w-full bg-green-500 py-2 rounded"
+                    className="mt-3 w-full bg-green-500 py-2 rounded text-white"
                   >
                     Buy
                   </button>
@@ -237,6 +220,15 @@ Product Link: ${url}`;
 
         </div>
       </div>
+
+      {/* ✅ MODAL */}
+      {selectedProduct && (
+        <BuyModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
+
     </div>
   );
 }

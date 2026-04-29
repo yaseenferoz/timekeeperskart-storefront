@@ -1,11 +1,14 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import API from "../api/api";
+import BuyModal from "../components/BuyModal";
 
 function ProductDetail() {
   const { id } = useParams();
+
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState("");
+  const [showModal, setShowModal] = useState(false); // ✅ NEW
 
   useEffect(() => {
     API.get("/api/products")
@@ -25,28 +28,10 @@ function ProductDetail() {
     );
   }
 
-  const handleBuyNow = () => {
-    // ✅ Use live domain for reliability
-    const productUrl = `https://www.ma-quality-products.online/product/${product._id}`;
-
-    const message = `Hi 👋
-
-I want to buy this watch:
-
-Name: ${product.name}
-Price: ₹${product.price}
-Product Link: ${productUrl}`;
-
-    const url = `https://wa.me/919980419466?text=${encodeURIComponent(message)}`;
-
-    console.log("WhatsApp Message:", message); // debug
-    window.open(url, "_blank");
-  };
-
   return (
     <div className="min-h-screen bg-black text-white">
 
-      {/* Spacer for fixed navbar */}
+      {/* Spacer for navbar */}
       <div className="h-24"></div>
 
       <div className="max-w-6xl mx-auto px-6 pb-16 grid md:grid-cols-2 gap-10">
@@ -75,7 +60,9 @@ Product Link: ${productUrl}`;
         <div>
           <h1 className="text-3xl font-bold">{product.name}</h1>
 
-          <p className="text-yellow-400 text-2xl mt-3">₹{product.price}</p>
+          <p className="text-yellow-400 text-2xl mt-3">
+            ₹{product.price}
+          </p>
 
           <div className="mt-4 text-gray-400 space-y-1">
             <p>Brand: {product.brand}</p>
@@ -88,9 +75,9 @@ Product Link: ${productUrl}`;
             {product.description}
           </div>
 
-          {/* WhatsApp Button */}
+          {/* ✅ UPDATED BUY BUTTON */}
           <button
-            onClick={handleBuyNow}
+            onClick={() => setShowModal(true)}
             className="mt-8 bg-green-500 hover:bg-green-600 px-6 py-3 rounded-lg text-white w-full md:w-auto"
           >
             Buy on WhatsApp
@@ -98,6 +85,15 @@ Product Link: ${productUrl}`;
         </div>
 
       </div>
+
+      {/* ✅ MODAL */}
+      {showModal && (
+        <BuyModal
+          product={product}
+          onClose={() => setShowModal(false)}
+        />
+      )}
+
     </div>
   );
 }
