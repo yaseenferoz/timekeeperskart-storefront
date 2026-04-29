@@ -65,10 +65,43 @@ function ProductDetail() {
           </p>
 
           <div className="mt-4 text-gray-400 space-y-1">
+
             <p>Brand: {product.brand}</p>
             <p>Gender: {product.gender}</p>
-            <p>Movement: {product.movement}</p>
-            <p>Style: {product.style}</p>
+            <p>Category: {product.category}</p>
+
+            {/* WATCH */}
+            {product.category === "watch" && (
+              <>
+                <p>Movement: {product.movement}</p>
+                <p>Style: {product.style}</p>
+              </>
+            )}
+
+            {/* SMARTWATCH */}
+            {product.category === "smartwatch" && (
+              <>
+                <p>Battery: {product.attributes?.battery}</p>
+                <p>Display: {product.attributes?.display}</p>
+              </>
+            )}
+
+            {/* SUNGLASSES */}
+            {product.category === "sunglasses" && (
+              <>
+                <p>Lens: {product.attributes?.lens}</p>
+                <p>UV Protection: {product.attributes?.uv}</p>
+              </>
+            )}
+
+            {/* SHOES */}
+            {product.category === "shoes" && (
+              <>
+                <p>Size: {product.attributes?.size}</p>
+                <p>Material: {product.attributes?.material}</p>
+              </>
+            )}
+
           </div>
 
           <div className="mt-6 text-gray-300 whitespace-pre-line">
