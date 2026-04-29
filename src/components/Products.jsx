@@ -2,18 +2,35 @@ import { useEffect, useState } from "react";
 import API from "../api/api";
 import { useNavigate } from "react-router-dom";
 
-function Products() {
+function Products({ title = "Our Collection", filter = null, limit = 6 }) {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     API.get("/api/products")
-      .then((res) => setProducts(res.data))
+      .then((res) => {
+        let data = res.data;
+
+        // ✅ Sort latest first (New Arrivals)
+        data = data.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+
+        // ✅ Filter (men / women)
+        if (filter) {
+          data = data.filter(
+            (p) =>
+              p.gender?.toLowerCase() === filter.toLowerCase()
+          );
+        }
+
+        // ✅ Limit number of products
+        setProducts(data.slice(0, limit));
+      })
       .catch((err) => console.log(err));
-  }, []);
+  }, [filter, limit]);
 
   const handleBuyNow = (product) => {
-    // ✅ Use your live domain directly (avoids cache/env issues)
     const productUrl = `https://www.ma-quality-products.online/product/${product._id}`;
 
     const message = `Hi 👋
@@ -26,7 +43,6 @@ Product Link: ${productUrl}`;
 
     const url = `https://wa.me/919980419466?text=${encodeURIComponent(message)}`;
 
-    console.log("WhatsApp Message:", message); // debug
     window.open(url, "_blank");
   };
 
@@ -35,8 +51,9 @@ Product Link: ${productUrl}`;
       id="products"
       className="max-w-7xl mx-auto px-6 py-16 scroll-mt-24"
     >
+      {/* Dynamic Title */}
       <h2 className="text-3xl font-bold mb-10 text-center text-white">
-        Our Collection
+        {title}
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -68,7 +85,7 @@ Product Link: ${productUrl}`;
               {/* WhatsApp Button */}
               <button
                 onClick={(e) => {
-                  e.stopPropagation(); // prevent navigation
+                  e.stopPropagation();
                   handleBuyNow(p);
                 }}
                 className="mt-4 w-full bg-green-500 hover:bg-green-600 py-2 rounded-lg text-white"

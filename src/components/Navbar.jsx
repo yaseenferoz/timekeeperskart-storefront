@@ -16,8 +16,12 @@ function Navbar() {
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-8 text-sm text-gray-300">
           <Link to="/" className="hover:text-gold">Home</Link>
-          <Link to="/" className="hover:text-gold">Collection</Link>
-          <Link to="/" className="hover:text-gold">About</Link>
+        
+
+  <a href="/policies" className="hover:text-yellow-400">
+    Policies
+  </a>
+
         </div>
 
         {/* Contact Button */}
