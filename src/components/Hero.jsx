@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
 
 function Hero() {
-  const slides = [
-    {
-      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30",
-    },
-    {
-      image: "https://images.unsplash.com/photo-1649357585015-179ed98f513d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGx1eHVyeSUyMHdhdGNofGVufDB8fDB8fHww",
-    },
-    {
-      image: "https://images.unsplash.com/photo-1619976396248-56d05beb2919?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-  ];
+
+const slides = [
+  {
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1600&q=80",
+  },
+   {
+    image: "https://images.unsplash.com/photo-1539874754764-5a96559165b0?w=1600&q=80",
+  },
+{
+    image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=1600&q=80",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?w=1600&q=80",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=1600&q=80",
+  },
+];
+
 
   const [current, setCurrent] = useState(0);
 
