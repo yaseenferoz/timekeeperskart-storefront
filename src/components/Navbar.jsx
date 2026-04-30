@@ -22,7 +22,7 @@ function Navbar() {
         {/* LOGO */}
         <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="logo" className="h-10 w-10 object-contain" />
-          <span className="text-white font-semibold text-lg hidden sm:block">
+         <span className="text-white font-semibold text-sm sm:text-lg">
             MA Quality Products
           </span>
         </Link>
